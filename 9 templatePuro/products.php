@@ -1,7 +1,7 @@
 <?php 
 	include  "scripts.php";
 	$products = getAllProducts();
-	print_r($products)
+	//print_r($products)
 ?>
 
 <!DOCTYPE html>
@@ -712,11 +712,10 @@
 							<div class="sort-filter">
 								<span class="text-uppercase">Sort By:</span>
 								<select class="input">
-										<option value="0">Position</option>
 										<option value="0">Price</option>
-										<option value="0">Rating</option>
 									</select>
-								<a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
+								<a onclick="" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
+								<a onclick="" class="main-btn icon-btn"><i class="fa fa-arrow-up"></i></a>
 							</div>
 						</div>
 						<div class="pull-right">
