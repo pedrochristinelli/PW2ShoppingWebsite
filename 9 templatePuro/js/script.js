@@ -26,3 +26,10 @@ $("#todos").click(() => {
   $("div.ram").show();
   $("div.vga").show();
 })
+
+function paginaProduto(id) {
+  <?php
+    $id = "<script>this.id</script>";
+    header("Location:products-page.php?id={$id}");
+  ?>;
+}
