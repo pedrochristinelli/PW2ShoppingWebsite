@@ -10,3 +10,19 @@ $.ajax({
 }).fail(function(jqXHR, textStatus ){
     console.log("Request failed: " + textStatus);
 });
+
+
+$("#vga").click(() => {
+  $("div.ram").toggle();
+  $("div.vga").show();
+})
+
+$("#ram").click(()=>{
+  $("div.vga").toggle();
+  $("div.ram").show();
+})
+
+$("#todos").click(() => {
+  $("div.ram").show();
+  $("div.vga").show();
+})

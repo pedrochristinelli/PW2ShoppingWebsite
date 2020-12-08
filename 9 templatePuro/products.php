@@ -1,4 +1,4 @@
-<?php 
+<?php
 	include  "scripts.php";
 	$products = getAllProducts();
 	print_r($products)
@@ -637,9 +637,9 @@
 					<div class="aside">
 						<h3 class="aside-title">Filter by Brand</h3>
 						<ul class="list-links">
-							<li><a href="#">Nike</a></li>
-							<li><a href="#">Adidas</a></li>
-							<li><a href="#">Polo</a></li>
+							<li><a href="#" id="vga">VGA</a></li>
+							<li><a href="#" id="ram">RAM</a></li>
+							<li><a href="#" id="todos">Todos os produtos</a></li>
 							<li><a href="#">Lacost</a></li>
 						</ul>
 					</div>
@@ -745,7 +745,7 @@
 						<div class="row">
 						<?php foreach($products as $product): ?>
 							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
+							<div class="col-md-4 col-sm-6 col-xs-6 <?= $product->tipo ?>">
 								<div class="product product-single">
 									<div class="product-thumb">
 										<div class="product-label">
