@@ -1,7 +1,8 @@
 <?php
-	$products = [];
-	$productsSortCrescente = [];
-	$productsSortDecrescente = [];
+
+$products = [];
+$productsSortCrescente = [];
+$productsSortDecrescente = [];
 
 function getAllProducts(){
 	$products = json_decode(file_get_contents('https://ramos-api.herokuapp.com/produtos?pront=3007561&key=b106fee95ac6ab1a4fdbe5e480dd61ed'));
@@ -16,6 +17,19 @@ function getAllProductsSortCrescente() {
 function getAllProductsSortDecrescente() {
 	$productsSortDecrescente = json_decode(file_get_contents('https://ramos-api.herokuapp.com/produtos?preco=DESC&pront=3007561&key=b106fee95ac6ab1a4fdbe5e480dd61ed'));
 	return $productsSortDecrescente;
+}
+
+function countAllPoductsPrices($products){
+	$fullPrice = 0;
+	foreach ($products as $key) {
+		$fullPrice = $fullPrice + $key->preco;
+	}
+	if ($fullPrice == null) {
+		return 0;
+	} else {
+		return $fullPrice;
+	}
+	
 }
 
 function getOneProduct($id) {

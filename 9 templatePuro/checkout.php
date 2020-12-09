@@ -1,21 +1,12 @@
 <?php
 	session_start();
+	include  "scripts.php";
 	$cartProducts =[];
 	if (isset($_SESSION["cartProducts"])) {
 		$cartProducts = $_SESSION["cartProducts"];
 	}
-	include  "scripts.php";
-	$products = getAllProducts();
-	if(isset($_GET["sort"])){
-		if($_GET["sort"] == "true"){
-			$products = getAllProductsSortCrescente();
-		} else {
-			$products = getAllProductsSortDecrescente();
-		}
-	}
-	//echo '<br><br>';
-	//print_r($productsSortCrescente);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -150,7 +141,6 @@
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
 								<span><?= countAllPoductsPrices($cartProducts); ?>$</span>
-								<li><a onclick="<?php session_unset();?>"><i class="fa fa-trash-o"></i> Clean Cart</a></li>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
@@ -395,8 +385,8 @@
 				<div class="menu-nav">
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="products.php">Shop</a></li>
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Shop</a></li>
 						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -559,7 +549,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li class="active">Products</li>
+				<li class="active">Checkout</li>
 			</ul>
 		</div>
 	</div>
@@ -571,270 +561,163 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-				<!-- ASIDE -->
-				<div id="aside" class="col-md-3">
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Shop by:</h3>
-						<ul class="filter-list">
-							<li><span class="text-uppercase">color:</span></li>
-							<li><a href="#" style="color:#FFF; background-color:#8A2454;">Camelot</a></li>
-							<li><a href="#" style="color:#FFF; background-color:#475984;">East Bay</a></li>
-							<li><a href="#" style="color:#FFF; background-color:#BF6989;">Tapestry</a></li>
-							<li><a href="#" style="color:#FFF; background-color:#9A54D8;">Medium Purple</a></li>
-						</ul>
-
-						<ul class="filter-list">
-							<li><span class="text-uppercase">Size:</span></li>
-							<li><a href="#">X</a></li>
-							<li><a href="#">XL</a></li>
-						</ul>
-
-						<ul class="filter-list">
-							<li><span class="text-uppercase">Price:</span></li>
-							<li><a href="#">MIN: $20.00</a></li>
-							<li><a href="#">MAX: $120.00</a></li>
-						</ul>
-
-						<ul class="filter-list">
-							<li><span class="text-uppercase">Gender:</span></li>
-							<li><a href="#">Men</a></li>
-						</ul>
-
-						<button class="primary-btn">Clear All</button>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Price</h3>
-						<div id="price-slider"></div>
-					</div>
-					<!-- aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter By Color:</h3>
-						<ul class="color-option">
-							<li><a href="#" style="background-color:#475984;"></a></li>
-							<li><a href="#" style="background-color:#8A2454;"></a></li>
-							<li class="active"><a href="#" style="background-color:#BF6989;"></a></li>
-							<li><a href="#" style="background-color:#9A54D8;"></a></li>
-							<li><a href="#" style="background-color:#675F52;"></a></li>
-							<li><a href="#" style="background-color:#050505;"></a></li>
-							<li><a href="#" style="background-color:#D5B47B;"></a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter By Size:</h3>
-						<ul class="size-option">
-							<li class="active"><a href="#">S</a></li>
-							<li class="active"><a href="#">XL</a></li>
-							<li><a href="#">SL</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Gender</h3>
-						<ul class="list-links">
-							<li><a href="#" id="vga">VGA</a></li>
-							<li><a href="#" id="ram">RAM</a></li>
-							<li><a href="#" id="todos">Todos os produtos</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Brand</h3>
-						<ul class="list-links">
-							<li><a href="#" id="todosBrand">Todas</a></li>
-							<li><a href="#" id="evga">EVGA</a></li>
-							<li><a href="#" id="msi">MSI</a></li>
-							<li><a href="#" id="pcyes">PCYES</a></li>
-							<li><a href="#" id="zotac">ZOTAC</a></li>
-							<li><a href="#" id="asus">ASUS</a></li>
-							<li><a href="#" id="hyperx">HYPER X</a></li>
-							<li><a href="#" id="corsair">CORSAIR</a></li>
-							<li><a href="#" id="kingston">KINGSTON</a></li>
-							<li><a href="#" id="xpg">XPG</a></li>
-							<li><a href="#" id="crucial">CRUCIAL</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Top Rated Product</h3>
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="<?php echo $products[0]->imagem; ?>" alt="">
+				<form id="checkout-form" class="clearfix">
+					<div class="col-md-6">
+						<div class="billing-details">
+							<p>Already a customer ? <a href="#">Login</a></p>
+							<div class="section-title">
+								<h3 class="title">Billing Details</h3>
 							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.php?id=<?php echo $products[0]->id; ?>"><?php echo $products[0]->nome; ?></a></h2>
-								<h3 class="product-price"><?php echo $products[0]->preco; ?></h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
+							<div class="form-group">
+								<input class="input" type="text" name="first-name" placeholder="First Name">
 							</div>
-						</div>
-						<!-- /widget product -->
-
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="<?php echo $products[11]->imagem; ?>" alt="">
+							<div class="form-group">
+								<input class="input" type="text" name="last-name" placeholder="Last Name">
 							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.php?id=<?php echo $products[11]->id; ?>"><?php echo $products[11]->nome; ?></a></h2>
-								<h3 class="product-price"><?php echo $products[11]->preco; ?></h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
+							<div class="form-group">
+								<input class="input" type="email" name="email" placeholder="Email">
 							</div>
-						</div>
-						<!-- /widget product -->
-					</div>
-					<!-- /aside widget -->
-				</div>
-				<!-- /ASIDE -->
-
-				<!-- MAIN -->
-				<div id="main" class="col-md-9">
-					<!-- store top filter -->
-					<div class="store-filter clearfix">
-						<div class="pull-left">
-							<div class="row-filter">
-								<a href="#"><i class="fa fa-th-large"></i></a>
-								<a href="#" class="active"><i class="fa fa-bars"></i></a>
+							<div class="form-group">
+								<input class="input" type="text" name="address" placeholder="Address">
 							</div>
-							<div class="sort-filter">
-								<span class="text-uppercase">Sort By:</span>
-								<!-- <select class="input" id="select"> -->
-								<!--		<option value="false">Position</option>
-										<option value="true">Price</option>
-								</select> -->
-								<a href="products.php?sort=true" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-								<a href="products.php?sort=false" class="main-btn icon-btn"><i class="fa fa-arrow-up"></i></a>
-								<a href="products.php" class="main-btn icon-btn"><i class="fa fa-exchange"></i></a>
+							<div class="form-group">
+								<input class="input" type="text" name="city" placeholder="City">
 							</div>
-						</div>
-						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
+							<div class="form-group">
+								<input class="input" type="text" name="country" placeholder="Country">
 							</div>
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /store top filter -->
-					<!-- STORE -->
-					<div id="store">
-						<!-- row -->
-							<?php $contador = 0 ?>
-								<?php foreach($products as $product): ?>
-									<?php if($contador%3 == 0){echo "<div class='row'>";} ?>
-									<!-- Product Single -->
-									<div class="col-md-4 col-sm-6 col-xs-6 <?= $product->tipo ?> <?= $product->marca ?>">
-										<div class="product product-single">
-											<div class="product-thumb">
-												<div class="product-label">
-													<span>New</span>
-												</div>
-												<button class="main-btn quick-view"><a href="product-page.php?id=<?= $product->id; ?>"><i class="fa fa-search-plus"></i> Quick view</a></button>
-												<img src="<?= $product->imagem; ?>" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price"><?= $product->preco; ?></h3>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-o empty"></i>
-												</div>
-												<h2 class="product-name"><a href="product-page.php?id=<?= $product->id; ?>"><?= $product->nome; ?></a></h2>
-												<div class="product-btns">
-													<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-													<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-													<button class="primary-btn add-to-cart" onclick="<?php 
-														array_push($cartProducts, $product->id);
-														$_SESSION["cartProducts"] = $cartProducts;
-													 ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-												</div>
-											</div>
-										</div>
+							<div class="form-group">
+								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+							</div>
+							<div class="form-group">
+								<input class="input" type="tel" name="tel" placeholder="Telephone">
+							</div>
+							<div class="form-group">
+								<div class="input-checkbox">
+									<input type="checkbox" id="register">
+									<label class="font-weak" for="register">Create Account?</label>
+									<div class="caption">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+											<p>
+												<input class="input" type="password" name="password" placeholder="Enter Your Password">
 									</div>
-									<?php $contador++ ?>
-									<?php if($contador%3 == 0){echo "</div>";} ?>
-									<!-- /Product Single -->
-								<?php endforeach; ?>
-						<!-- /row -->
+								</div>
+							</div>
+						</div>
 					</div>
-					<!-- /STORE -->
 
-					<!-- store bottom filter -->
-					<div class="store-filter clearfix">
-						<div class="pull-left">
-							<div class="row-filter">
-								<a href="#"><i class="fa fa-th-large"></i></a>
-								<a href="#" class="active"><i class="fa fa-bars"></i></a>
+					<div class="col-md-6">
+						<div class="shiping-methods">
+							<div class="section-title">
+								<h4 class="title">Shiping Methods</h4>
 							</div>
-							<div class="sort-filter">
-								<span class="text-uppercase">Sort By:</span>
-								<select class="input">
-										<option value="0">Position</option>
-										<option value="0">Price</option>
-										<option value="0">Rating</option>
-									</select>
-								<a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
+							<div class="input-checkbox">
+								<input type="radio" name="shipping" id="shipping-1" checked>
+								<label for="shipping-1">Free Shiping -  $0.00</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="shipping" id="shipping-2">
+								<label for="shipping-2">Standard - $4.00</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
 							</div>
 						</div>
-						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
+
+						<div class="payments-methods">
+							<div class="section-title">
+								<h4 class="title">Payments Methods</h4>
 							</div>
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
+							<div class="input-checkbox">
+								<input type="radio" name="payments" id="payments-1" checked>
+								<label for="payments-1">Direct Bank Transfer</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="payments" id="payments-2">
+								<label for="payments-2">Cheque Payment</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="payments" id="payments-3">
+								<label for="payments-3">Paypal System</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
 						</div>
 					</div>
-					<!-- /store bottom filter -->
-				</div>
-				<!-- /MAIN -->
+
+					<div class="col-md-12">
+						<div class="order-summary clearfix">
+							<div class="section-title">
+								<h3 class="title">Order Review</h3>
+							</div>
+							<table class="shopping-cart-table table">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th></th>
+										<th class="text-center">Price</th>
+										<th class="text-center">Quantity</th>
+										<th class="text-center">Total</th>
+										<th class="text-right"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach($cartProducts as $cartProduct): ?>
+										<tr>
+											<td class="thumb"><img src="<?= $cartProduct->imagem?>" alt=""></td>
+											<td class="details">
+												<a href="#"><?= $cartProduct->nome?></a>
+												<ul>
+													<li><span><?= $cartProduct->marca?></span></li>
+												</ul>
+											</td>
+											<td class="price text-center"><strong>$<?= $cartProduct->preco?></strong></td>
+											<td class="qty text-center"><input class="input" type="number" value="1"></td>
+											<td class="total text-center"><strong class="primary-color">$<?= $cartProduct->preco?></strong></td>
+											<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></	td>
+										</tr>
+									<?php endforeach?>
+								</tbody>
+								<tfoot>
+									<tr>
+										<th class="empty" colspan="3"></th>
+										<th>SUBTOTAL</th>
+										<th colspan="2" class="sub-total">$<?= countAllPoductsPrices($cartProducts); ?></th>
+									</tr>
+									<tr>
+										<th class="empty" colspan="3"></th>
+										<th>SHIPING</th>
+										<td colspan="2">Free Shipping</td>
+									</tr>
+									<tr>
+										<th class="empty" colspan="3"></th>
+										<th>TOTAL</th>
+										<th colspan="2" class="total">$<?= countAllPoductsPrices($cartProducts); ?></th>
+									</tr>
+								</tfoot>
+							</table>
+							<div class="pull-right">
+								<button class="primary-btn">Place Order</button>
+							</div>
+						</div>
+
+					</div>
+				</form>
 			</div>
 			<!-- /row -->
 		</div>
@@ -947,7 +830,7 @@
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
-	<script src="js/script.js"></script>
+
 </body>
 
 </html>
