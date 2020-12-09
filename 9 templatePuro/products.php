@@ -1,8 +1,13 @@
 <?php
 	include  "scripts.php";
 	$products = getAllProducts();
-	//print_r($products);
-	$productsSortCrescente = getAllProductsSortCrescente();
+	if(isset($_GET["sort"])){
+		if($_GET["sort"] == "true"){
+			$products = getAllProductsSortCrescente();
+		} else {
+			$products = getAllProductsSortDecrescente();
+		}
+	}
 	//echo '<br><br>';
 	//print_r($productsSortCrescente);
 ?>
@@ -638,7 +643,7 @@
 
 					<!-- aside widget -->
 					<div class="aside">
-						<h3 class="aside-title">Filter by Brand</h3>
+						<h3 class="aside-title">Filter by Gender</h3>
 						<ul class="list-links">
 							<li><a href="#" id="vga">VGA</a></li>
 							<li><a href="#" id="ram">RAM</a></li>
@@ -649,10 +654,19 @@
 
 					<!-- aside widget -->
 					<div class="aside">
-						<h3 class="aside-title">Filter by Gender</h3>
+						<h3 class="aside-title">Filter by Brand</h3>
 						<ul class="list-links">
-							<li class="active"><a href="#">Men</a></li>
-							<li><a href="#">Women</a></li>
+							<li><a href="#" id="todosBrand">Todas</a></li>
+							<li><a href="#" id="evga">EVGA</a></li>
+							<li><a href="#" id="msi">MSI</a></li>
+							<li><a href="#" id="pcyes">PCYES</a></li>
+							<li><a href="#" id="zotac">ZOTAC</a></li>
+							<li><a href="#" id="asus">ASUS</a></li>
+							<li><a href="#" id="hyperx">HYPER X</a></li>
+							<li><a href="#" id="corsair">CORSAIR</a></li>
+							<li><a href="#" id="kingston">KINGSTON</a></li>
+							<li><a href="#" id="xpg">XPG</a></li>
+							<li><a href="#" id="crucial">CRUCIAL</a></li>
 						</ul>
 					</div>
 					<!-- /aside widget -->
@@ -713,12 +727,13 @@
 							</div>
 							<div class="sort-filter">
 								<span class="text-uppercase">Sort By:</span>
-								<select class="input" id="select">
-										<option value="0">Position</option>
-										<option value="1">Price</option>
-										<option value="2">Rating</option>
-									</select>
-								<a href="#" class="main-btn icon-btn" onclick="sort()"><i class="fa fa-arrow-down"></i></a>
+								<!-- <select class="input" id="select"> -->
+								<!--		<option value="false">Position</option>
+										<option value="true">Price</option>
+								</select> -->
+								<a href="products.php?sort=true" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
+								<a href="products.php?sort=false" class="main-btn icon-btn"><i class="fa fa-arrow-up"></i></a>
+								<a href="products.php" class="main-btn icon-btn"><i class="fa fa-exchange"></i></a>
 							</div>
 						</div>
 						<div class="pull-right">
@@ -746,7 +761,7 @@
 						<div class="row">
 								<?php foreach($products as $product): ?>
 									<!-- Product Single -->
-									<div class="col-md-4 col-sm-6 col-xs-6 <?= $product->tipo ?>">
+									<div class="col-md-4 col-sm-6 col-xs-6 <?= $product->tipo ?> <?= $product->marca ?>">
 										<div class="product product-single">
 											<div class="product-thumb">
 												<div class="product-label">

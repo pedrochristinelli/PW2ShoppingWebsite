@@ -27,9 +27,157 @@ $("#todos").click(() => {
   $("div.vga").show();
 })
 
-function paginaProduto(id) {
-  <?php
-    $id = "<script>this.id</script>";
-    header("Location:products-page.php?id={$id}");
-  ?>;
-}
+$("#todosBrand").click(() => {
+  $("div.evga").show();
+  $("div.msi").show();
+  $("div.pcyes").show();
+  $("div.zotac").show();
+  $("div.asus").show();
+  $("div.hyperx").show();
+  $("div.corsair").show();
+  $("div.kingston").show();
+  $("div.xpg").show();
+  $("div.crucial").show();
+  $("div.curcial").show();
+})
+
+$("#evga").click(() => {
+  $("div.evga").show();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+
+$("#msi").click(() => {
+  $("div.evga").hide();
+  $("div.msi").show();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#pcyes").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").show();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#zotac").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").show();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#asus").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").show();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#hyperx").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").show();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#corsair").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").show();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#kingston").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").show();
+  $("div.xpg").hide();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#xpg").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").show();
+  $("div.crucial").hide();
+  $("div.curcial").hide();
+})
+
+$("#crucial").click(() => {
+  $("div.evga").hide();
+  $("div.msi").hide();
+  $("div.pcyes").hide();
+  $("div.zotac").hide();
+  $("div.asus").hide();
+  $("div.hyperx").hide();
+  $("div.corsair").hide();
+  $("div.kingston").hide();
+  $("div.xpg").hide();
+  $("div.crucial").show();
+  $("div.curcial").show();
+})
