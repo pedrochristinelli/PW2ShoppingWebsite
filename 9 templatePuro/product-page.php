@@ -1,5 +1,5 @@
 <?php
-	include  "scripts.php";
+	include  "logica/scripts.php";
 	$stringGET = "";
 	if(isset($_GET["cart"]) && $_GET["cart"] != "") {
 		$stringGET = $_GET["cart"];
@@ -157,7 +157,7 @@
 								</div>
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
-								<span><?php echo countAllPoductsPrices($cartProducts); ?></span>
+								<span>$<?php echo countAllPoductsPrices($cartProducts); ?></span>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
@@ -404,8 +404,8 @@
 				<div class="menu-nav">
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="products.php<?php echo $stringGET ?>">Shop</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="products.php">Shop</a></li>
 						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -548,10 +548,10 @@
 						<li><a href="#">Sales</a></li>
 						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="products.html">Products</a></li>
-								<li><a href="product-page.html">Product Details</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
+								<li><a href="index.php">Home</a></li>
+								<li><a href="products.php">Products</a></li>
+								<li><a href="product-page.php">Product Details</a></li>
+								<li><a href="checkout.php">Checkout</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -567,9 +567,9 @@
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Products</a></li>
-				<li><a href="#">Category</a></li>
+				<li><a href="index.php">Home</a></li>
+				<li><a href="products.php">Products</a></li>
+				<li><a href="products.php">Category</a></li>
 				<li class="active">Product Name Goes Here</li>
 			</ul>
 		</div>

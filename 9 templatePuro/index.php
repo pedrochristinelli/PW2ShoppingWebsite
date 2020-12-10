@@ -1,3 +1,15 @@
+<?php
+	include  "logica/scripts.php";
+	$stringGET = "";
+	if(isset($_GET["cart"]) && $_GET["cart"] != "") {
+		$stringGET = $_GET["cart"];
+		$cartProducts = explode(" ", $_GET["cart"]);
+	} else {
+		$cartProducts = [];
+	}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,39 +138,32 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
 									<i class="fa fa-shopping-cart"></i>
-									<span class="qty">3</span>
+									<span class="qty"><?php echo count($cartProducts); ?></span>
 								</div>
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
-								<span>35.20$</span>
+								<span>$<?php echo countAllPoductsPrices($cartProducts); ?></span>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
+										<?php foreach ($cartProducts as $key => $value) : ?>
+											<?php $cartProduct = getOneProduct(intval($value)); ?>
+											<div class="product product-widget">
+												<div class="product-thumb">
+													<img src="<?= $cartProduct->imagem ?>" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-price">$<?= $cartProduct->preco ?> <span class="qty">x3</span></h3>
+													<h2 class="product-name"><a href="#"><?= $cartProduct->nome; ?></a></h2>
+												</div>
+												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
+										<?php endforeach; ?>
 									</div>
 									<div class="shopping-cart-btns">
 										<button class="main-btn">View Cart</button>
-										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+										<button class="primary-btn"><a href="checkout.php?cart=<?php echo $stringGET; ?>">Checkout <i class="fa fa-arrow-circle-right"></i></a></button>
 									</div>
 								</div>
 							</div>
@@ -185,7 +190,7 @@
 		<div class="container">
 			<div id="responsive-nav">
 				<!-- category nav -->
-				<div class="category-nav show-on-click">
+				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
 						<li class="dropdown side-dropdown">
@@ -384,8 +389,8 @@
 				<div class="menu-nav">
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Shop</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="products.php">Shop</a></li>
 						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -528,10 +533,10 @@
 						<li><a href="#">Sales</a></li>
 						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="products.html">Products</a></li>
-								<li><a href="product-page.html">Product Details</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
+								<li><a href="index.php">Home</a></li>
+								<li><a href="products.php">Products</a></li>
+								<li><a href="product-page.php">Product Details</a></li>
+								<li><a href="checkout.php">Checkout</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -543,18 +548,52 @@
 	</div>
 	<!-- /NAVIGATION -->
 
-	<!-- BREADCRUMB -->
-	<div id="breadcrumb">
+	<!-- HOME -->
+	<div id="home">
+		<!-- container -->
 		<div class="container">
-			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Products</a></li>
-				<li><a href="#">Category</a></li>
-				<li class="active">Product Name Goes Here</li>
-			</ul>
+			<!-- home wrap -->
+			<div class="home-wrap">
+				<!-- home slick -->
+				<div id="home-slick">
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img src="./img/banner01.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h1>Bags sale</h1>
+							<h3 class="white-color font-weak">Up to 50% Discount</h3>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+					<!-- /banner -->
+
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img src="./img/banner02.jpg" alt="">
+						<div class="banner-caption">
+							<h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+					<!-- /banner -->
+
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img src="./img/banner03.jpg" alt="">
+						<div class="banner-caption">
+							<h1 class="white-color">New Product <span>Collection</span></h1>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+					<!-- /banner -->
+				</div>
+				<!-- /home slick -->
+			</div>
+			<!-- /home wrap -->
 		</div>
+		<!-- /container -->
 	</div>
-	<!-- /BREADCRUMB -->
+	<!-- /HOME -->
 
 	<!-- section -->
 	<div class="section">
@@ -562,208 +601,39 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-				<!--  Product Details -->
-				<div class="product product-details clearfix">
-					<div class="col-md-6">
-						<div id="product-main-view">
-							<div class="product-view">
-								<img src="./img/main-product01.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product04.jpg" alt="">
-							</div>
+				<!-- banner -->
+				<div class="col-md-4 col-sm-6">
+					<a class="banner banner-1" href="#">
+						<img src="./img/banner10.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
 						</div>
-						<div id="product-view">
-							<div class="product-view">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/thumb-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/thumb-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/thumb-product04.jpg" alt="">
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="product-body">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<h2 class="product-name">Product Name Goes Here</h2>
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
-								<a href="#">3 Review(s) / Add Review</a>
-							</div>
-							<p><strong>Availability:</strong> In Stock</p>
-							<p><strong>Brand:</strong> E-SHOP</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-								dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<div class="product-options">
-								<ul class="size-option">
-									<li><span class="text-uppercase">Size:</span></li>
-									<li class="active"><a href="#">S</a></li>
-									<li><a href="#">XL</a></li>
-									<li><a href="#">SL</a></li>
-								</ul>
-								<ul class="color-option">
-									<li><span class="text-uppercase">Color:</span></li>
-									<li class="active"><a href="#" style="background-color:#475984;"></a></li>
-									<li><a href="#" style="background-color:#8A2454;"></a></li>
-									<li><a href="#" style="background-color:#BF6989;"></a></li>
-									<li><a href="#" style="background-color:#9A54D8;"></a></li>
-								</ul>
-							</div>
-
-							<div class="product-btns">
-								<div class="qty-input">
-									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number">
-								</div>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-								<div class="pull-right">
-									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-									<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="product-tab">
-							<ul class="tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab1">Details</a></li>
-								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
-							</ul>
-							<div class="tab-content">
-								<div id="tab1" class="tab-pane fade in active">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-										irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-								</div>
-								<div id="tab2" class="tab-pane fade in">
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="product-reviews">
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<ul class="reviews-pages">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-												</ul>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<h4 class="text-uppercase">Write Your Review</h4>
-											<p>Your email address will not be published.</p>
-											<form class="review-form">
-												<div class="form-group">
-													<input class="input" type="text" placeholder="Your Name" />
-												</div>
-												<div class="form-group">
-													<input class="input" type="email" placeholder="Email Address" />
-												</div>
-												<div class="form-group">
-													<textarea class="input" placeholder="Your review"></textarea>
-												</div>
-												<div class="form-group">
-													<div class="input-rating">
-														<strong class="text-uppercase">Your Rating: </strong>
-														<div class="stars">
-															<input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
-															<input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
-															<input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
-															<input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
-															<input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
-														</div>
-													</div>
-												</div>
-												<button class="primary-btn">Submit</button>
-											</form>
-										</div>
-									</div>
-
-
-
-								</div>
-							</div>
-						</div>
-					</div>
-
+					</a>
 				</div>
-				<!-- /Product Details -->
+				<!-- /banner -->
+
+				<!-- banner -->
+				<div class="col-md-4 col-sm-6">
+					<a class="banner banner-1" href="#">
+						<img src="./img/banner11.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
+
+				<!-- banner -->
+				<div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+					<a class="banner banner-1" href="#">
+						<img src="./img/banner12.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
+
 			</div>
 			<!-- /row -->
 		</div>
@@ -775,6 +645,637 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- section-title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Deals Of The Day</h2>
+						<div class="pull-right">
+							<div class="product-slick-dots-1 custom-dots"></div>
+						</div>
+					</div>
+				</div>
+				<!-- /section-title -->
+
+				<!-- banner -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="banner banner-2">
+						<img src="./img/banner14.jpg" alt="">
+						<div class="banner-caption">
+							<h2 class="white-color">NEW<br>COLLECTION</h2>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /banner -->
+
+				<!-- Product Slick -->
+				<div class="col-md-9 col-sm-6 col-xs-6">
+					<div class="row">
+						<div id="product-slick-1" class="product-slick">
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<div class="product-label">
+										<span>New</span>
+										<span class="sale">-20%</span>
+									</div>
+									<ul class="product-countdown">
+										<li><span>00 H</span></li>
+										<li><span>00 M</span></li>
+										<li><span>00 S</span></li>
+									</ul>
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product01.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<div class="product-label">
+										<span class="sale">-20%</span>
+									</div>
+									<ul class="product-countdown">
+										<li><span>00 H</span></li>
+										<li><span>00 M</span></li>
+										<li><span>00 S</span></li>
+									</ul>
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product07.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<div class="product-label">
+										<span>New</span>
+										<span class="sale">-20%</span>
+									</div>
+									<ul class="product-countdown">
+										<li><span>00 H</span></li>
+										<li><span>00 M</span></li>
+										<li><span>00 S</span></li>
+									</ul>
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product06.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<div class="product-label">
+										<span>New</span>
+										<span class="sale">-20%</span>
+									</div>
+									<ul class="product-countdown">
+										<li><span>00 H</span></li>
+										<li><span>00 M</span></li>
+										<li><span>00 S</span></li>
+									</ul>
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product08.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+						</div>
+					</div>
+				</div>
+				<!-- /Product Slick -->
+			</div>
+			<!-- /row -->
+
+			<!-- row -->
+			<div class="row">
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Deals Of The Day</h2>
+						<div class="pull-right">
+							<div class="product-slick-dots-2 custom-dots">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- section title -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single product-hot">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span class="sale">-20%</span>
+							</div>
+							<ul class="product-countdown">
+								<li><span>00 H</span></li>
+								<li><span>00 M</span></li>
+								<li><span>00 S</span></li>
+							</ul>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product01.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Slick -->
+				<div class="col-md-9 col-sm-6 col-xs-6">
+					<div class="row">
+						<div id="product-slick-2" class="product-slick">
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product06.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50</h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<div class="product-label">
+										<span class="sale">-20%</span>
+									</div>
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product05.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product04.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50</h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+							<!-- Product Single -->
+							<div class="product product-single">
+								<div class="product-thumb">
+									<div class="product-label">
+										<span>New</span>
+										<span class="sale">-20%</span>
+									</div>
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+									<img src="./img/product03.jpg" alt="">
+								</div>
+								<div class="product-body">
+									<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o empty"></i>
+									</div>
+									<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+									<div class="product-btns">
+										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+									</div>
+								</div>
+							</div>
+							<!-- /Product Single -->
+
+						</div>
+					</div>
+				</div>
+				<!-- /Product Slick -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+	<!-- section -->
+	<div class="section section-grey">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- banner -->
+				<div class="col-md-8">
+					<div class="banner banner-1">
+						<img src="./img/banner13.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /banner -->
+
+				<!-- banner -->
+				<div class="col-md-4 col-sm-6">
+					<a class="banner banner-1" href="#">
+						<img src="./img/banner11.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
+
+				<!-- banner -->
+				<div class="col-md-4 col-sm-6">
+					<a class="banner banner-1" href="#">
+						<img src="./img/banner12.jpg" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Latest Products</h2>
+					</div>
+				</div>
+				<!-- section title -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product01.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50</h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product02.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product03.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product04.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50</h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+			</div>
+			<!-- /row -->
+
+			<!-- row -->
+			<div class="row">
+				<!-- banner -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="banner banner-2">
+						<img src="./img/banner15.jpg" alt="">
+						<div class="banner-caption">
+							<h2 class="white-color">NEW<br>COLLECTION</h2>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /banner -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product07.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product06.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="./img/product05.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+			</div>
+			<!-- /row -->
+
 			<!-- row -->
 			<div class="row">
 				<!-- section title -->
@@ -908,7 +1409,6 @@
 		<!-- /container -->
 	</div>
 	<!-- /section -->
-
 
 	<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">
