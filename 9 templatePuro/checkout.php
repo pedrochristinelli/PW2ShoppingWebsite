@@ -139,31 +139,33 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
 									<i class="fa fa-shopping-cart"></i>
-									<span class="qty"><?= count($cartProducts) ?></span>
+									<span class="qty"><?php echo count($cartProducts); ?></span>
 								</div>
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
-								<span><?= countAllPoductsPrices($cartProducts); ?>$</span>
+								<span><?php echo countAllPoductsPrices($cartProducts); ?></span>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-									<?php foreach($cartProducts as $cartProduct): ?>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="<?= $cartProduct->imagem; ?>" alt="">
+										<?php foreach ($cartProducts as $key => $value) : ?>
+											<?php $cartProduct = getOneProduct(intval($value)); ?>
+											<div class="product product-widget">
+												<div class="product-thumb">
+													<img src="<?= $cartProduct->imagem ?>" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-price">$<?= $cartProduct->preco ?> <span class="qty">x3</span></h3>
+													<h2 class="product-name"><a href="#"><?= $cartProduct->nome; ?></a></h2>
+												</div>
+												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product-body">
-												<h3 class="product-price">$<?= $cartProduct->preco; ?> <span class="qty">x1</span></h3>
-												<h2 class="product-name"><a href="#"><?= $cartProduct->nome; ?></a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="shopping-cart-btns">
-											<button class="main-btn">View Cart</button>
-											<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-										</div>
-									<?php endforeach ?>
+										<?php endforeach; ?>
+									</div>
+									<div class="shopping-cart-btns">
+										<button class="main-btn">View Cart</button>
+										<button class="primary-btn"><a href="checkout.php?cart=<?php echo $stringGET; ?>">Checkout <i class="fa fa-arrow-circle-right"></i></a></button>
+									</div>
 								</div>
 							</div>
 						</li>
