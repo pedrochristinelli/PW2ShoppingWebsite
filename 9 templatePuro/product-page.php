@@ -4,7 +4,7 @@
 	if(isset($_GET["cart"]) && $_GET["cart"] != "") {
 		$stringGET = $_GET["cart"];
 		$cartProducts = explode(" ", $_GET["cart"]);
-		print_r($cartProducts);
+		//print_r($cartProducts);
 	} else {
 		$cartProducts = [];
 	}
