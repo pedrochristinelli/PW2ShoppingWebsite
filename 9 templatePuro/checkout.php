@@ -1,9 +1,12 @@
 <?php
-	session_start();
 	include  "scripts.php";
-	$cartProducts =[];
-	if (isset($_SESSION["cartProducts"])) {
-		$cartProducts = $_SESSION["cartProducts"];
+	$stringGET = "";
+	if(isset($_GET["cart"]) && $_GET["cart"] != "") {
+		$stringGET = $_GET["cart"];
+		$cartProducts = explode(" ", $_GET["cart"]);
+		print_r($cartProducts);
+	} else {
+		$cartProducts = [];
 	}
 ?>
 
@@ -677,7 +680,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach($cartProducts as $cartProduct): ?>
+									<?php foreach($cartProducts as $key=>$value): ?>
+										<?php $cartProduct = getOneProduct(intval($value)); ?>
 										<tr>
 											<td class="thumb"><img src="<?= $cartProduct->imagem?>" alt=""></td>
 											<td class="details">

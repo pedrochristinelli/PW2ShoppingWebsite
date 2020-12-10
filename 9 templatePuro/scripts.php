@@ -22,14 +22,15 @@ function getAllProductsSortDecrescente() {
 function countAllPoductsPrices($products){
 	$fullPrice = 0;
 	foreach ($products as $key) {
-		$fullPrice = $fullPrice + $key->preco;
+		$product = getOneProduct(intval($key));
+		$fullPrice = $fullPrice + $product->preco;
 	}
 	if ($fullPrice == null) {
 		return 0;
 	} else {
 		return $fullPrice;
 	}
-	
+
 }
 
 function getOneProduct($id) {

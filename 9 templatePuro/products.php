@@ -1,10 +1,16 @@
 <?php
-	session_start();
-	$cartProducts =[];
-	if (isset($_SESSION["cartProducts"])) {
-		$cartProducts = $_SESSION["cartProducts"];
-	}
 	include  "scripts.php";
+	$stringGET = "";
+	if(isset($_GET["cart"]) && $_GET["cart"] != "") {
+		$stringGET = $_GET["cart"];
+		$cartProducts = explode(" ", $_GET["cart"]);
+		print_r($cartProducts);
+	} else {
+		$cartProducts = [];
+	}
+	/*if (isset($_SESSION["cartProducts"])) {
+		$cartProducts = $_SESSION["cartProducts"];
+	}*/
 	$products = getAllProducts();
 	if(isset($_GET["sort"])){
 		if($_GET["sort"] == "true"){
@@ -145,32 +151,33 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
 									<i class="fa fa-shopping-cart"></i>
-									<span class="qty"><?= count($cartProducts) ?></span>
+									<span class="qty"><?php echo count($cartProducts); ?></span>
 								</div>
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
-								<span><?= countAllPoductsPrices($cartProducts); ?>$</span>
-								<li><a onclick="<?php session_unset();?>"><i class="fa fa-trash-o"></i> Clean Cart</a></li>
+								<span><?php echo countAllPoductsPrices($cartProducts); ?></span>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-									<?php foreach($cartProducts as $cartProduct): ?>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="<?= $cartProduct->imagem; ?>" alt="">
+										<?php foreach ($cartProducts as $key => $value) : ?>
+											<?php $cartProduct = getOneProduct(intval($value)); ?>
+											<div class="product product-widget">
+												<div class="product-thumb">
+													<img src="<?= $cartProduct->imagem ?>" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-price">$<?= $cartProduct->preco ?> <span class="qty">x3</span></h3>
+													<h2 class="product-name"><a href="#"><?= $cartProduct->nome; ?></a></h2>
+												</div>
+												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product-body">
-												<h3 class="product-price">$<?= $cartProduct->preco; ?> <span class="qty">x1</span></h3>
-												<h2 class="product-name"><a href="#"><?= $cartProduct->nome; ?></a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="shopping-cart-btns">
-											<button class="main-btn">View Cart</button>
-											<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-										</div>
-									<?php endforeach ?>
+										<?php endforeach; ?>
+									</div>
+									<div class="shopping-cart-btns">
+										<button class="main-btn">View Cart</button>
+										<button class="primary-btn"><a href="checkout.php?cart=<?php echo $stringGET; ?>">Checkout <i class="fa fa-arrow-circle-right"></i></a></button>
+									</div>
 								</div>
 							</div>
 						</li>
@@ -396,7 +403,7 @@
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
 						<li><a href="index.html">Home</a></li>
-						<li><a href="products.php">Shop</a></li>
+						<li><a href="<?php echo "products.php?cart=".$stringGET; ?>">Shop</a></li>
 						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -677,7 +684,7 @@
 								<img src="<?php echo $products[0]->imagem; ?>" alt="">
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.php?id=<?php echo $products[0]->id; ?>"><?php echo $products[0]->nome; ?></a></h2>
+								<h2 class="product-name"><a href="product-page.php?id=<?php echo $products[0]->id."&cart=".$stringGET; ?>"><?php echo $products[0]->nome; ?></a></h2>
 								<h3 class="product-price"><?php echo $products[0]->preco; ?></h3>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -696,7 +703,7 @@
 								<img src="<?php echo $products[11]->imagem; ?>" alt="">
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.php?id=<?php echo $products[11]->id; ?>"><?php echo $products[11]->nome; ?></a></h2>
+								<h2 class="product-name"><a href="product-page.php?id=<?php echo $products[11]->id."&cart=".$stringGET; ?>"><?php echo $products[11]->nome; ?></a></h2>
 								<h3 class="product-price"><?php echo $products[11]->preco; ?></h3>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -728,9 +735,9 @@
 								<!--		<option value="false">Position</option>
 										<option value="true">Price</option>
 								</select> -->
-								<a href="products.php?sort=true" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-								<a href="products.php?sort=false" class="main-btn icon-btn"><i class="fa fa-arrow-up"></i></a>
-								<a href="products.php" class="main-btn icon-btn"><i class="fa fa-exchange"></i></a>
+								<a href="products.php?sort=true&cart=<?php echo $stringGET; ?>"class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
+								<a href="products.php?sort=false&cart=<?php echo $stringGET; ?>" class="main-btn icon-btn"><i class="fa fa-arrow-up"></i></a>
+								<a href="products.php?cart=<?php echo $stringGET; ?>" class="main-btn icon-btn"><i class="fa fa-exchange"></i></a>
 							</div>
 						</div>
 						<div class="pull-right">
@@ -765,7 +772,7 @@
 												<div class="product-label">
 													<span>New</span>
 												</div>
-												<button class="main-btn quick-view"><a href="product-page.php?id=<?= $product->id; ?>"><i class="fa fa-search-plus"></i> Quick view</a></button>
+												<button class="main-btn quick-view"><a href="product-page.php?id=<?= $product->id."&cart=".$stringGET; ?>"><i class="fa fa-search-plus"></i> Quick view</a></button>
 												<img src="<?= $product->imagem; ?>" alt="">
 											</div>
 											<div class="product-body">
@@ -777,14 +784,11 @@
 													<i class="fa fa-star"></i>
 													<i class="fa fa-star-o empty"></i>
 												</div>
-												<h2 class="product-name"><a href="product-page.php?id=<?= $product->id; ?>"><?= $product->nome; ?></a></h2>
+												<h2 class="product-name"><a href="product-page.php?id=<?= $product->id."&cart=".$stringGET; ?>"><?= $product->nome; ?></a></h2>
 												<div class="product-btns">
 													<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 													<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-													<button class="primary-btn add-to-cart" onclick="<?php 
-														array_push($cartProducts, $product->id);
-														$_SESSION["cartProducts"] = $cartProducts;
-													 ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+													<button class="primary-btn add-to-cart"><a href="<?= "products.php?cart=".$product->id." ".$stringGET; ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</a></button>
 												</div>
 											</div>
 										</div>

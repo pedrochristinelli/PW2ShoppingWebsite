@@ -1,11 +1,21 @@
 <?php
 	include  "scripts.php";
+	$stringGET = "";
+	if(isset($_GET["cart"]) && $_GET["cart"] != "") {
+		$stringGET = $_GET["cart"];
+		$cartProducts = explode(" ", $_GET["cart"]);
+		print_r($cartProducts);
+	} else {
+		$cartProducts = [];
+	}
   if(isset($_GET["id"])) {
     $product = getOneProduct($_GET["id"]);
     $id = $_GET["id"];
+		$idFinal = $id;
   } else {
     $product = getOneProduct(1);
     $id = 1;
+		$idFinal = $id;
   }
   if($id + 4 > 20) $id = 0;
   for($i=0; $i<4; $i++) {
@@ -143,39 +153,32 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
 									<i class="fa fa-shopping-cart"></i>
-									<span class="qty">3</span>
+									<span class="qty"><?php echo count($cartProducts); ?></span>
 								</div>
 								<strong class="text-uppercase">My Cart:</strong>
 								<br>
-								<span>35.20$</span>
+								<span><?php echo countAllPoductsPrices($cartProducts); ?></span>
 							</a>
 							<div class="custom-menu">
 								<div id="shopping-cart">
 									<div class="shopping-cart-list">
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
+										<?php foreach ($cartProducts as $key => $value) : ?>
+											<?php $cartProduct = getOneProduct(intval($value)); ?>
+											<div class="product product-widget">
+												<div class="product-thumb">
+													<img src="<?= $cartProduct->imagem ?>" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-price">$<?= $cartProduct->preco ?> <span class="qty">x3</span></h3>
+													<h2 class="product-name"><a href="#"><?= $cartProduct->nome; ?></a></h2>
+												</div>
+												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-												<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
+										<?php endforeach; ?>
 									</div>
 									<div class="shopping-cart-btns">
 										<button class="main-btn">View Cart</button>
-										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
+										<button class="primary-btn"><a href="checkout.php?cart=<?php echo $stringGET; ?>">Checkout <i class="fa fa-arrow-circle-right"></i></a></button>
 									</div>
 								</div>
 							</div>
@@ -402,7 +405,7 @@
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
 						<li><a href="index.html">Home</a></li>
-						<li><a href="products.php">Shop</a></li>
+						<li><a href="products.php<?php echo $stringGET ?>">Shop</a></li>
 						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -634,7 +637,7 @@
 								dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 							<div class="product-btns">
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart"><a href="product-page.php?id=<?php echo $product->id."&cart=".$product->id." ". $stringGET; ?>" <i class="fa fa-shopping-cart"></i> Add to Cart</a></button>
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -787,7 +790,7 @@
   				<div class="col-md-3 col-sm-6 col-xs-6">
   					<div class="product product-single">
   						<div class="product-thumb">
-  							<button class="main-btn quick-view"><a href="product-page.php?id=<?= $product1->id; ?>"><i class="fa fa-search-plus"></i> Quick view </a></button>
+  							<button class="main-btn quick-view"><a href="product-page.php?id=<?= $product1->id."&cart=".$stringGET; ?>"><i class="fa fa-search-plus"></i> Quick view </a></button>
   							<img src="<?= $product1->imagem; ?>" alt="">
   						</div>
   						<div class="product-body">
@@ -799,11 +802,11 @@
   								<i class="fa fa-star"></i>
   								<i class="fa fa-star-o empty"></i>
   							</div>
-  							<h2 class="product-name"><a href="product-page.php?id=<?= $product1->id; ?>"><?= $product1->nome; ?></a></h2>
+  							<h2 class="product-name"><a href="product-page.php?id=<?= $product1->id."&cart=".$stringGET; ?>"><?= $product1->nome; ?></a></h2>
   							<div class="product-btns">
   								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
   								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-  								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+  								<button class="primary-btn add-to-cart"><a href="product-page.php?id=<?php echo $product1->id."&cart=".$product1->id." ".$stringGET; ?>"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
   							</div>
   						</div>
   					</div>
